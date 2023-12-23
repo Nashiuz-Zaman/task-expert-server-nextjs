@@ -1,22 +1,18 @@
 const TaskModel = require("../../../models/Task/Task");
 
 // basically updating a single task's status and lastUpdated
-const updateTask = async (req, res) => {
+const deleteTask = async (req, res) => {
   try {
     const id = req.params.id;
-    const newTaskData = req.body;
-    console.log(id);
-    console.log(newTaskData);
+
     const filter = { _id: id };
 
-    const updatedTask = await TaskModel.findOneAndUpdate(filter, newTaskData, {
-      new: true,
-    });
+    const result = await TaskModel.deleteOne(filter);
 
-    if (!updatedTask) {
+    if (!result.deletedCount) {
       return res
         .status(404)
-        .send({ success: false, message: "Task not updated" });
+        .send({ success: false, message: "Task not deleted" });
     }
 
     const sortOption = { lastUpdated: 1 };
@@ -31,4 +27,4 @@ const updateTask = async (req, res) => {
   }
 };
 
-module.exports = updateTask;
+module.exports = deleteTask;
