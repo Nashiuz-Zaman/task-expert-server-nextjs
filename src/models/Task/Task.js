@@ -25,6 +25,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  lastUpdated: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Task", taskSchema);
