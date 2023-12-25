@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   imageSource: {
     type: String,
     required: true,
@@ -17,34 +21,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rentedApartments: [
-    {
-      flatId: {
-        type: String,
-        required: true,
-      },
-      agreementRequestDate: {
-        type: String,
-        required: true,
-      },
-      agreementAcceptDate: {
-        type: String,
-        required: true,
-      },
-      floor: {
-        type: String,
-        required: true,
-      },
-      block: {
-        type: String,
-        required: true,
-      },
-      aptNo: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

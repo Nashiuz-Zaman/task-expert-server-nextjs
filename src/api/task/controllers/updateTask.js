@@ -4,14 +4,17 @@ const TaskModel = require("../../../models/Task/Task");
 const updateTask = async (req, res) => {
   try {
     const id = req.params.id;
-    const newTaskData = req.body;
-    console.log(id);
-    console.log(newTaskData);
+    const { lastUpdated, status } = req.body;
+
     const filter = { _id: id };
 
-    const updatedTask = await TaskModel.findOneAndUpdate(filter, newTaskData, {
-      new: true,
-    });
+    const updatedTask = await TaskModel.findOneAndUpdate(
+      filter,
+      { lastUpdated, status },
+      {
+        new: true,
+      }
+    );
 
     if (!updatedTask) {
       return res

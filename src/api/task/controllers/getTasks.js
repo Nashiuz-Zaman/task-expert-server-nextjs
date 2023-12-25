@@ -2,6 +2,9 @@ const TaskModel = require("./../../../models/Task/Task");
 
 const getTasks = async (req, res) => {
   try {
+    const email = req.query.email;
+
+    const filter = { email: email };
     // const taskInfo = req.body;
 
     // Change this part when polishing the project in the future
@@ -13,7 +16,7 @@ const getTasks = async (req, res) => {
 
     // set the sorting order
     const sortOption = { lastUpdated: 1 };
-    const tasks = await TaskModel.find().sort(sortOption);
+    const tasks = await TaskModel.find(filter).sort(sortOption);
     return res.send({ success: true, data: tasks });
   } catch (error) {
     console.error("Error fetching tasks:", error);
