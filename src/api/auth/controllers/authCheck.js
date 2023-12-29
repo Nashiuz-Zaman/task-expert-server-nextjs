@@ -1,6 +1,7 @@
-// import
+// imports
 const User = require("../../../models/User/User");
 const generateToken = require("../../../utils/generateToken");
+const setCookie = require("../../../utils/setCookie");
 
 const authCheck = async (req, res) => {
   // take email
@@ -12,8 +13,11 @@ const authCheck = async (req, res) => {
   // generate jwt
   const token = generateToken({ email });
 
+  // set cookie
+  setCookie(res, token);
+
   // send to client
-  return res.send({ success: true, user, token });
+  return res.send({ success: true, user, tokenExists: true });
 };
 
 module.exports = authCheck;

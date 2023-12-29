@@ -1,5 +1,6 @@
 // import
 const generateToken = require("../../../utils/generateToken");
+const setCookie = require("../../../utils/setCookie");
 const User = require("./../../../models/User/User");
 
 const createUser = async (req, res) => {
@@ -10,7 +11,10 @@ const createUser = async (req, res) => {
   // if user created successfully generate token
   if (newCreatedUser._id) {
     const token = generateToken({ email: user.email });
-    return res.send({ success: true, token, user: newCreatedUser });
+
+    // set cookie
+    setCookie(res, token);
+    return res.send({ success: true, tokenExists: true, user: newCreatedUser });
   }
 };
 
