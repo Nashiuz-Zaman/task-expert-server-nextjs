@@ -1,8 +1,9 @@
 const setCookie = (res, token) => {
+  console.log(token);
   res.cookie("token", token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: false,
+    // sameSite: "none",
   });
 };
 
