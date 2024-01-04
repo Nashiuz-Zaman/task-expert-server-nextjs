@@ -23,7 +23,9 @@ const updateTask = async (req, res) => {
     }
 
     const sortOption = { lastUpdated: 1 };
-    const newTasks = await TaskModel.find().sort(sortOption);
+    const newTasks = await TaskModel.find({ email: updatedTask.email }).sort(
+      sortOption
+    );
 
     return res.send({ success: true, updatedTasks: newTasks });
   } catch (error) {

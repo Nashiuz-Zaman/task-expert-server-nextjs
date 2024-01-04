@@ -4,11 +4,12 @@ const TaskModel = require("../../../models/Task/Task");
 const deleteTask = async (req, res) => {
   try {
     const id = req.params.id;
+    const email = req.query.email;
 
     const filter = { _id: id };
 
     const result = await TaskModel.deleteOne(filter);
-
+    console.log(result);
     if (!result.deletedCount) {
       return res
         .status(404)
@@ -16,7 +17,7 @@ const deleteTask = async (req, res) => {
     }
 
     const sortOption = { lastUpdated: 1 };
-    const newTasks = await TaskModel.find().sort(sortOption);
+    const newTasks = await TaskModel.find({ email: email }).sort(sortOption);
 
     return res.send({ success: true, updatedTasks: newTasks });
   } catch (error) {
