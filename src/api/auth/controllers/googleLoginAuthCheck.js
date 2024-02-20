@@ -3,7 +3,7 @@ const User = require("../../../models/User/User");
 const generateToken = require("../../../utils/generateToken");
 const setCookie = require("../../../utils/setCookie");
 
-const googleAuthCheck = async (req, res) => {
+const googleLoginAuthCheck = async (req, res) => {
   const googleUser = req.body;
 
   // check if google user exists
@@ -40,4 +40,4 @@ const googleAuthCheck = async (req, res) => {
   }
 };
 
-module.exports = googleAuthCheck;
+module.exports = googleLoginAuthCheck;
