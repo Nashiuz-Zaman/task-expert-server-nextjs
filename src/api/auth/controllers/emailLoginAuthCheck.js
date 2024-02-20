@@ -3,7 +3,7 @@ const User = require("../../../models/User/User");
 const generateToken = require("../../../utils/generateToken");
 const setCookie = require("../../../utils/setCookie");
 
-const authCheck = async (req, res) => {
+const emailLoginAuthCheck = async (req, res) => {
   // take email
   const { email } = req.body;
 
@@ -20,4 +20,4 @@ const authCheck = async (req, res) => {
   return res.send({ success: true, user, tokenExists: true });
 };
 
-module.exports = authCheck;
+module.exports = emailLoginAuthCheck;
