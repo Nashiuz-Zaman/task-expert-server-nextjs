@@ -10,15 +10,15 @@ const taskSchema = new mongoose.Schema({
     required: true,
   },
   deadline: {
-    type: String,
+    type: Date,
     required: true,
   },
-  priority: {
-    type: String,
+  priorityLevel: {
+    type: Number,
     required: true,
   },
-  status: {
-    type: String,
+  statusLevel: {
+    type: Number,
     required: true,
   },
   email: {
@@ -26,7 +26,7 @@ const taskSchema = new mongoose.Schema({
     required: true,
   },
   lastUpdated: {
-    type: String,
+    type: Date,
     required: true,
   },
 });
