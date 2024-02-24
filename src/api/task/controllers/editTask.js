@@ -1,19 +1,14 @@
 const TaskModel = require("../../../models/Task/Task");
 
 // basically updating a single task's status and lastUpdated
-const updateTask = async (req, res) => {
+const editTask = async (req, res) => {
   try {
-    const { lastUpdated, statusLevel } = req.body;
+    const editData = req.body;
 
-    const filter = { _id: req.params.id };
+    let taskToEdit = await TaskModel.findById(req.params.id);
+    Object.assign(taskToEdit, editData);
 
-    const updatedTask = await TaskModel.findOneAndUpdate(
-      filter,
-      { lastUpdated, statusLevel: parseInt(statusLevel) },
-      {
-        new: true,
-      }
-    );
+    const updatedTask = await taskToEdit.save();
 
     if (!updatedTask) {
       return res
@@ -30,4 +25,4 @@ const updateTask = async (req, res) => {
   }
 };
 
-module.exports = updateTask;
+module.exports = editTask;
