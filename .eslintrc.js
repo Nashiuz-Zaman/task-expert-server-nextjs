@@ -12,7 +12,7 @@ module.exports = {
       },
       files: ["**/*.js"],
       parserOptions: {
-        sourceType: "script",
+        sourceType: "module",
       },
     },
   ],

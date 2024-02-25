@@ -1,34 +1,35 @@
-const mongoose = require("mongoose");
+import { Schema, model } from 'mongoose';
 
-const taskSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  deadline: {
-    type: Date,
-    required: true,
-  },
-  priorityLevel: {
-    type: Number,
-    required: true,
-  },
-  statusLevel: {
-    type: Number,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  lastUpdated: {
-    type: Date,
-    required: true,
-  },
+const taskSchema = new Schema({
+   title: {
+      type: String,
+      required: true,
+   },
+   description: {
+      type: String,
+      required: true,
+   },
+   deadline: {
+      type: Date,
+      required: true,
+   },
+   priorityLevel: {
+      type: Number,
+      required: true,
+   },
+   statusLevel: {
+      type: Number,
+      required: true,
+   },
+   email: {
+      type: String,
+      required: true,
+   },
+   lastUpdated: {
+      type: Date,
+      required: true,
+   },
 });
 
-module.exports = mongoose.model("Task", taskSchema);
+const TaskModel = model('Task', taskSchema);
+export default TaskModel;

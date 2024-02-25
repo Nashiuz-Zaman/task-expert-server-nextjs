@@ -1,21 +1,25 @@
 // import
-const generateToken = require("../../../utils/generateToken");
-const setCookie = require("../../../utils/setCookie");
-const User = require("./../../../models/User/User");
+import generateToken from '../../../utils/generateToken.js';
+import setCookie from '../../../utils/setCookie.js';
+import UserModel from './../../../models/User/User.js';
 
 const createUser = async (req, res) => {
-  const user = req.body;
-  // create user
-  const newCreatedUser = await User.create(user);
+   const user = req.body;
+   // create user
+   const newCreatedUser = await UserModel.create(user);
 
-  // if user created successfully generate token
-  if (newCreatedUser._id) {
-    const token = generateToken({ email: user.email });
+   // if user created successfully generate token
+   if (newCreatedUser._id) {
+      const token = generateToken({ email: user.email });
 
-    // set cookie
-    setCookie(res, token);
-    return res.send({ success: true, tokenExists: true, user: newCreatedUser });
-  }
+      // set cookie
+      setCookie(res, token);
+      return res.send({
+         success: true,
+         tokenExists: true,
+         user: newCreatedUser,
+      });
+   }
 };
 
-module.exports = createUser;
+export default createUser;

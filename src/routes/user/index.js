@@ -1,13 +1,13 @@
 // imports
-const express = require("express");
-const createUser = require("../../api/user/controllers/createUser");
-const checkUser = require("../../api/user/controllers/checkUser");
+import express from 'express';
+import createUser from './../../api/user/controllers/createUser.js';
+import checkUser from './../../api/user/controllers/checkUser.js';
 
 // create router
-const router = express.Router();
+const userRouter = express.Router();
 
 // routes
-router.post("/users", createUser);
-router.post("/users/checkExistence", checkUser);
+userRouter.post('/users', createUser);
+userRouter.post('/users/checkExistence', checkUser);
 
-module.exports = router;
+export default userRouter;
