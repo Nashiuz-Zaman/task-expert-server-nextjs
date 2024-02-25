@@ -1,14 +1,13 @@
 // imports
-const express = require("express");
-const emailLoginAuthCheck = require("../../api/auth/controllers/emailLoginAuthCheck");
-const googleLoginAuthCheck = require("../../api/auth/controllers/googleLoginAuthCheck");
+import express from 'express';
+import emailLoginAuthCheck from './../../api/auth/controllers/emailLoginAuthCheck.js';
+import googleLoginAuthCheck from './../../api/auth/controllers/googleLoginAuthCheck.js';
 
 // create router
-const router = express.Router();
+const authRouter = express.Router();
 
 // routes
-router.post("/login", emailLoginAuthCheck);
+authRouter.post('/login', emailLoginAuthCheck);
+authRouter.post('/google-login', googleLoginAuthCheck);
 
-router.post("/google-login", googleLoginAuthCheck);
-
-module.exports = router;
+export default authRouter;

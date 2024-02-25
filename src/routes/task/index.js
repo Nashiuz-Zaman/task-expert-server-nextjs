@@ -1,21 +1,21 @@
 // imports
-const express = require("express");
+import express from 'express';
 
 // controller
-const getTasks = require("./../../api/task/controllers/getTasks");
-const updateTask = require("./../../api/task/controllers/updateTask");
-const deleteTask = require("../../api/task/controllers/deleteTask");
-const createTask = require("../../api/task/controllers/createTask");
-const editTask = require("./../../api/task/controllers/editTask");
+import getTasks from '../../api/task/controllers/getTasks.js';
+import updateTask from './../../api/task/controllers/updateTask.js';
+import deleteTask from './../../api/task/controllers/deleteTask.js';
+import createTask from './../../api/task/controllers/createTask.js';
+import editTask from './../../api/task/controllers/editTask.js';
 
 // create router
-const router = express.Router();
+const taskRouter = express.Router();
 
 // routes
-router.get("/tasks", getTasks);
-router.post("/tasks", createTask);
-router.patch("/tasks/update/:id", updateTask);
-router.put("/tasks/edit/:id", editTask);
-router.delete("/tasks/delete/:id", deleteTask);
+taskRouter.get('/tasks', getTasks);
+taskRouter.post('/tasks', createTask);
+taskRouter.patch('/tasks/update/:id', updateTask);
+taskRouter.put('/tasks/edit/:id', editTask);
+taskRouter.delete('/tasks/delete/:id', deleteTask);
 
-module.exports = router;
+export default taskRouter;

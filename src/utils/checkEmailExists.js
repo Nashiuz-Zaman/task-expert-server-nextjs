@@ -1,15 +1,15 @@
 // imports
-const User = require("../models/User/User");
+import UserModel from '../models/User/User.js';
 
-const checkEmailExists = async (email) => {
-  // check if we can find a user with the email
-  const user = await User.findOne({ email });
+const checkEmailExists = async email => {
+   // check if we can find a user with the email
+   const user = await UserModel.findOne({ email });
 
-  if (user) {
-    return true;
-  } else {
-    return false;
-  }
+   if (user) {
+      return true;
+   } else {
+      return false;
+   }
 };
 
-module.exports = checkEmailExists;
+export default checkEmailExists;

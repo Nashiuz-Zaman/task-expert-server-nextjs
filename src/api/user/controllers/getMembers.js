@@ -1,11 +1,11 @@
 // import
-const User = require("../../../models/User/User");
+import UserModel from './../../../models/User/User.js';
 
 const getMembers = async (req, res) => {
-  const filter = { role: "member" };
-  const members = await User.find(filter);
+   const filter = { role: 'member' };
+   const members = await UserModel.find(filter);
 
-  res.send(members);
+   res.send(members);
 };
 
-module.exports = getMembers;
+export default getMembers;

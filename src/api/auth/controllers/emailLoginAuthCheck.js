@@ -1,23 +1,19 @@
 // imports
-const User = require("../../../models/User/User");
-const generateToken = require("../../../utils/generateToken");
-const setCookie = require("../../../utils/setCookie");
+import UserModel from '../../../models/User/User.js';
+import generateToken from '../../../utils/generateToken.js';
+import setCookie from '../../../utils/setCookie.js';
 
 const emailLoginAuthCheck = async (req, res) => {
-  // take email
-  const { email } = req.body;
+   const { email } = req.body;
 
-  // find user
-  const user = await User.findOne({ email: email });
+   // find user
+   const user = await UserModel.findOne({ email: email });
 
-  // generate jwt
-  const token = generateToken({ email });
+   // generate jwt and set cookie
+   const token = generateToken({ email });
+   setCookie(res, token);
 
-  // set cookie
-  setCookie(res, token);
-
-  // send to client
-  return res.send({ success: true, user, tokenExists: true });
+   return res.send({ success: true, user, tokenExists: true });
 };
 
-module.exports = emailLoginAuthCheck;
+export default emailLoginAuthCheck;
