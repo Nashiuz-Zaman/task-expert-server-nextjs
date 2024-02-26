@@ -3,7 +3,7 @@ import UserModel from '../../../models/User/User.js';
 import generateToken from '../../../utils/generateToken.js';
 import setCookie from '../../../utils/setCookie.js';
 
-const emailLoginAuthCheck = async (req, res) => {
+const emailLogin = async (req, res) => {
    const { email } = req.body;
 
    // find user
@@ -16,4 +16,4 @@ const emailLoginAuthCheck = async (req, res) => {
    return res.send({ success: true, user, tokenExists: true });
 };
 
-export default emailLoginAuthCheck;
+export default emailLogin;

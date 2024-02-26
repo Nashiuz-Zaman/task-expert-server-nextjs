@@ -3,14 +3,13 @@ import UserModel from '../../../models/User/User.js';
 import generateToken from '../../../utils/generateToken.js';
 import setCookie from '../../../utils/setCookie.js';
 
-const googleLoginAuthCheck = async (req, res) => {
+const googleLogin = async (req, res) => {
    const googleUser = req.body;
 
    // check if google user exists
    const user = await UserModel.findOne({ email: googleUser.email });
    const token = generateToken({ email: googleUser.email });
 
-   //
    if (user) {
       // set cookie
       setCookie(res, token);
@@ -40,4 +39,4 @@ const googleLoginAuthCheck = async (req, res) => {
    }
 };
 
-export default googleLoginAuthCheck;
+export default googleLogin;
