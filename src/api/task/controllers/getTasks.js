@@ -4,6 +4,12 @@ const getTasks = async (req, res) => {
    try {
       const email = req.query.email;
 
+      if (req.decoded.email !== email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
+
       const filter = { email: email };
       // const taskInfo = req.body;
 
@@ -17,12 +23,12 @@ const getTasks = async (req, res) => {
       // set the sorting order
       const sortOption = { lastUpdated: 1 };
       const tasks = await TaskModel.find(filter).sort(sortOption);
-      return res.send({ success: true, data: tasks });
+      return res.send({ status: 'success', data: tasks });
    } catch (error) {
       console.error('Error fetching tasks:', error);
       return res
          .status(500)
-         .send({ success: false, error: 'Internal Server Error' });
+         .send({ status: 'error', error: 'Internal Server Error' });
    }
 };
 
