@@ -8,7 +8,12 @@ const addPinnedTask = async (req, res) => {
       const newlyPinnedTask = await PinnedTaskModel.create(newPinnedTask);
 
       if (newlyPinnedTask._id) {
-         return res.send({ status: 'success' });
+         // set the sorting order
+         const sortOption = { lastUpdated: 1 };
+         const pinnedTasks = await PinnedTaskModel.find(filter).sort(
+            sortOption
+         );
+         return res.send({ status: 'success', pinnedTasks });
       }
    } catch (error) {
       return res

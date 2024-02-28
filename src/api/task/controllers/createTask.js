@@ -11,13 +11,13 @@ const createTask = async (req, res) => {
          // set the sorting order
          const sortOption = { lastUpdated: 1 };
          const tasks = await TaskModel.find(filter).sort(sortOption);
-         return res.send({ success: true, updatedTasks: tasks });
+         return res.send({ status: 'success', tasks });
       }
    } catch (error) {
       console.error('Error fetching tasks:', error);
       return res
          .status(500)
-         .send({ success: false, error: 'Internal Server Error' });
+         .send({ status: 'error', customErrMessage: error.message });
    }
 };
 
