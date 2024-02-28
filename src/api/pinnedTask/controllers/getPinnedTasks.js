@@ -1,6 +1,7 @@
-import TaskModel from './../../../models/Task/Task.js';
+// imports
+import PinnedTaskModel from '../../../models/PinnedTask/PinnedTask.js';
 
-const getTasks = async (req, res) => {
+const getPinnedTasks = async (req, res) => {
    try {
       const email = req.query.email;
 
@@ -11,11 +12,9 @@ const getTasks = async (req, res) => {
       }
 
       const filter = { email: email };
+      const pinnedTasks = await PinnedTaskModel.find(filter);
 
-      // set the sorting order
-      const sortOption = { lastUpdated: 1 };
-      const tasks = await TaskModel.find(filter).sort(sortOption);
-      return res.send({ status: 'success', tasks });
+      return res.send({ status: 'success', pinnedTasks });
    } catch (error) {
       return res
          .status(500)
@@ -23,4 +22,4 @@ const getTasks = async (req, res) => {
    }
 };
 
-export default getTasks;
+export default getPinnedTasks;

@@ -9,7 +9,7 @@ const deleteTask = async (req, res) => {
       const filter = { _id: id };
 
       const result = await TaskModel.deleteOne(filter);
-      console.log(result);
+
       if (!result.deletedCount) {
          return res
             .status(404)
