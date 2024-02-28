@@ -13,6 +13,10 @@ const pinnedTaskSchema = new Schema({
       type: String,
       required: true,
    },
+   lastUpdated: {
+      type: Date,
+      required: true,
+   },
 });
 
 const PinnedTaskModel = model('PinnedTask', pinnedTaskSchema);
