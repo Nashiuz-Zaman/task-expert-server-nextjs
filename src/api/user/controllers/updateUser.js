@@ -2,26 +2,22 @@
 import UserModel from './../../../models/User/User.js';
 
 const updateUser = async (req, res) => {
-   const email = req.params.email;
-   const update = req.body;
-   const filter = { email: email };
+   try {
+      const updateData = req.body;
+      const filter = { email: req.params.email };
 
-   const role = update.role;
-   const newlyRentedApartment = update.newlyRentedApartment;
+      const user = await UserModel.findOne(filter);
 
-   const user = await UserModel.findOneAndUpdate(
-      filter,
-      {
-         $set: { role: role },
-         $push: { rentedApartments: newlyRentedApartment },
-      },
-      {
-         new: true,
+      Object.assign(user, updateData);
+      const updatedUser = await user.save();
+
+      if (updatedUser) {
+         return res.send({ status: 'success', user: updatedUser });
       }
-   );
-
-   if (user) {
-      return res.send({ success: true });
+   } catch (error) {
+      return res
+         .status(500)
+         .send({ status: 'error', customErrMessage: error.message });
    }
 };
 
