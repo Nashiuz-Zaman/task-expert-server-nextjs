@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const verifyToken = (req, res, next) => {
-   let token = req.headers.authorization;   
+   let token = req.headers.authorization;
    
    if (!token) {
       return res
