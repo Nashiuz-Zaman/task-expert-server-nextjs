@@ -1,19 +1,16 @@
 // imports
 import UserModel from '../../../models/User/User.js';
 import generateToken from '../../../utils/generateToken.js';
-import setCookie from '../../../utils/setCookie.js';
 
 const googleLogin = async (req, res) => {
    const googleUser = req.body;
 
    // check if google user exists
-   const user = await UserModel.findOne({ email: googleUser.email });
+   const user = await UserModel.findOne({ email: googleUser.email }).select('-password -role');
    const token = generateToken({ email: googleUser.email });
 
    if (user) {
-      // set cookie
-      setCookie(res, token);
-      return res.send({ success: true, user, tokenExists: true });
+      return res.send({ status: 'success', user, token });
    } else {
       // if no user is found in the database create the new user object in mongodb as user
       const newGoogleUser = {
@@ -26,14 +23,14 @@ const googleLogin = async (req, res) => {
 
       // create new user document in collection
       const newCreatedUser = await UserModel.create(newGoogleUser);
-      if (newCreatedUser._id) {
-         // set cookie
-         setCookie(res, token);
+      if (newCreatedUser._id) { 
+         
+         const {role,password, ...user} = newCreatedUser
 
          return res.send({
-            success: true,
-            tokenExists: true,
-            user: newCreatedUser,
+            status: 'success',
+            token,
+            user
          });
       }
    }
