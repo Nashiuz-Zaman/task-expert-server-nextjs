@@ -3,17 +3,25 @@ import TaskModel from './../../../models/Task/Task.js';
 // basically updating a single task's status and lastUpdated
 const updateTask = async (req, res) => {
    try {
-      const { lastUpdated, statusLevel } = req.body;
-
+      // verify
       const filter = { _id: req.params.id };
+      const taskToUpdateStatusOf = await TaskModel.findOne(filter);
+      if (req.decoded.email !== taskToUpdateStatusOf.email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
 
-      const updatedTask = await TaskModel.findOneAndUpdate(
-         filter,
-         { lastUpdated, statusLevel: parseInt(statusLevel) },
-         {
-            new: true,
-         }
-      );
+      // gather data
+      const { lastUpdated, statusLevel } = req.body;
+      const updatedStatusData = {
+         lastUpdated,
+         statusLevel: parseInt(statusLevel),
+      };
+
+      // updata task status
+      Object.assign(taskToUpdateStatusOf, updatedStatusData);
+      const updatedTask = await taskToUpdateStatusOf.save();
 
       if (!updatedTask) {
          return res

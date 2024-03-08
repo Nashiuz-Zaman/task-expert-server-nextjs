@@ -3,11 +3,17 @@ import TaskModel from './../../../models/Task/Task.js';
 // basically updating a single task's status and lastUpdated
 const editTask = async (req, res) => {
    try {
+      // verify
+      const filter = { _id: req.params.id };
+      const taskToEdit = await TaskModel.findOne(filter);
+      if (req.decoded.email !== taskToEdit.email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
+
       const editData = req.body;
-
-      let taskToEdit = await TaskModel.findById(req.params.id);
       Object.assign(taskToEdit, editData);
-
       const updatedTask = await taskToEdit.save();
 
       if (!updatedTask) {
@@ -18,7 +24,6 @@ const editTask = async (req, res) => {
 
       return res.send({ status: 'success' });
    } catch (error) {
-      console.error('Error updating task:', error);
       return res
          .status(500)
          .send({ status: 'error', customErrMessage: error.message });

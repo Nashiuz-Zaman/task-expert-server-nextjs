@@ -3,9 +3,17 @@ import UserModel from './../../../models/User/User.js';
 
 const updateUser = async (req, res) => {
    try {
-      const updateData = req.body;
-      const filter = { email: req.params.email };
+      // verify
+      const email = req.params.email;
+      if (req.decoded.email !== email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
 
+      // gather
+      const updateData = req.body;
+      const filter = { email };
       const user = await UserModel.findOne(filter);
 
       Object.assign(user, updateData);

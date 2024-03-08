@@ -2,8 +2,8 @@ import TaskModel from './../../../models/Task/Task.js';
 
 const getTasks = async (req, res) => {
    try {
+      // verify
       const email = req.query.email;
-
       if (req.decoded.email !== email) {
          return res
             .status(403)
@@ -11,9 +11,8 @@ const getTasks = async (req, res) => {
       }
 
       const filter = { email: email };
-
-      // set the sorting order
       const sortOption = { lastUpdated: 1 };
+      
       const tasks = await TaskModel.find(filter).sort(sortOption);
       return res.send({ status: 'success', tasks });
    } catch (error) {

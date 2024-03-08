@@ -5,7 +5,15 @@ import PinnedTaskModel from '../../../models/PinnedTask/PinnedTask.js';
 
 const deleteUser = async (req, res) => {
    try {
-      const filter = { email: req.params.email };
+      // verify
+      const email = req.params.email;
+      if (req.decoded.email !== email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
+
+      const filter = { email };
       const userDeletePromise = UserModel.deleteOne(filter);
       const taskDeletePromise = TaskModel.deleteMany(filter);
       const pinnedTaskDeletePromise = PinnedTaskModel.deleteMany(filter);
@@ -15,7 +23,7 @@ const deleteUser = async (req, res) => {
             userDeletePromise,
             taskDeletePromise,
             pinnedTaskDeletePromise,
-         ]);    
+         ]);
 
       if (userDeleteRes.deletedCount) {
          res.send({ status: 'success' });

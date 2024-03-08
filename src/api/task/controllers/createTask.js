@@ -2,8 +2,18 @@ import TaskModel from './../../../models/Task/Task.js';
 
 const createTask = async (req, res) => {
    try {
+      // verify
+      const email = newTask.email;    
+      if (req.decoded.email !== email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
+
+      // gather data
       const newTask = req.body;
-      const filter = { email: newTask.email };
+      const filter = { email };
+
       // create task
       const newCreatedTask = await TaskModel.create(newTask);
 

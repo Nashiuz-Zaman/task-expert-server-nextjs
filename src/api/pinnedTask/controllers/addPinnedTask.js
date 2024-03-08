@@ -3,7 +3,17 @@ import PinnedTaskModel from '../../../models/PinnedTask/PinnedTask.js';
 const addPinnedTask = async (req, res) => {
    try {
       const newPinnedTask = req.body;
-      const filter = { email: newPinnedTask.email };
+      const email = newPinnedTask.email;
+
+      // verify
+      if (req.decoded.email !== email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
+
+      const filter = { email };
+
       // create task
       const newlyPinnedTask = await PinnedTaskModel.create(newPinnedTask);
 

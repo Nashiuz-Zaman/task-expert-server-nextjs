@@ -3,6 +3,12 @@ import PinnedTaskModel from '../../../models/PinnedTask/PinnedTask.js';
 
 const removePinnedTask = async (req, res) => {
    try {
+      if (req.decoded.email !== req.query.email) {
+         return res
+            .status(403)
+            .send({ status: 'error', message: 'Forbidden Access' });
+      }
+
       const filter = { _id: req.params.id };
       const result = await PinnedTaskModel.deleteOne(filter);
 

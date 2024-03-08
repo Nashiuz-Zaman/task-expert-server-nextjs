@@ -11,7 +11,7 @@ const getPinnedTasks = async (req, res) => {
             .send({ status: 'error', message: 'Forbidden Access' });
       }
 
-      const filter = { email: email };
+      const filter = { email };
       const pinnedTasks = await PinnedTaskModel.find(filter);
 
       return res.send({ status: 'success', pinnedTasks });
