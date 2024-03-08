@@ -6,13 +6,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const verifyToken = (req, res, next) => {
-   const token = req.cookies.token;
-
+   let token = req.headers.authorization;   
+   
    if (!token) {
       return res
          .status(401)
          .send({ status: 'error', message: 'unauthorized access' });
    }
+
+   token = token.split(' ')[1]
 
    jwt.verify(token, process.env.token_secret, (err, decoded) => {
       if (err) {
