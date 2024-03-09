@@ -3,7 +3,8 @@ import TaskModel from './../../../models/Task/Task.js';
 const createTask = async (req, res) => {
    try {
       // verify
-      const email = newTask.email;    
+      const newTask = req.body;
+      const email = newTask.email;
       if (req.decoded.email !== email) {
          return res
             .status(403)
@@ -11,7 +12,6 @@ const createTask = async (req, res) => {
       }
 
       // gather data
-      const newTask = req.body;
       const filter = { email };
 
       // create task
