@@ -21,6 +21,10 @@ const userSchema = new Schema({
       type: String,
       required: true,
    },
+   loggedIn: {
+      type: Boolean,
+      required: true,
+   }
 });
 
 const UserModel = model('User', userSchema);

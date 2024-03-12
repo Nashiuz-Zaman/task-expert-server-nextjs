@@ -6,9 +6,12 @@ const emailLogin = async (req, res) => {
    const { email } = req.body;
 
    // find user
-   const user = await UserModel.findOne({ email: email }).select('-password -role');
+   const user = await UserModel.findOne({ email });
+   user.loggedIn = true;
+   const { password, ...updatedUser } = await user.save();
+
    const token = generateToken({ email });
-   return res.send({ status: 'success', user, token });
+   return res.send({ status: 'success', user: updatedUser, token });
 };
 
 export default emailLogin;

@@ -6,11 +6,14 @@ const googleLogin = async (req, res) => {
    const googleUser = req.body;
 
    // check if google user exists
-   const user = await UserModel.findOne({ email: googleUser.email }).select('-password -role');
+   const user = await UserModel.findOne({ email: googleUser.email });
+   user.loggedIn = true;
+   const { password, ...updatedUser } = await user.save();
+
    const token = generateToken({ email: googleUser.email });
 
-   if (user) {
-      return res.send({ status: 'success', user, token });
+   if (updatedUser) {
+      return res.send({ status: 'success', user: updatedUser, token });
    } else {
       // if no user is found in the database create the new user object in mongodb as user
       const newGoogleUser = {
@@ -19,18 +22,18 @@ const googleLogin = async (req, res) => {
          password: 'google-account',
          imageSource: googleUser.image,
          role: 'user',
+         loggedIn: true,
       };
 
       // create new user document in collection
       const newCreatedUser = await UserModel.create(newGoogleUser);
-      if (newCreatedUser._id) { 
-         
-         const {role,password, ...user} = newCreatedUser
+      if (newCreatedUser._id) {
+         const { password, ...user } = newCreatedUser;
 
          return res.send({
             status: 'success',
             token,
-            user
+            user,
          });
       }
    }
