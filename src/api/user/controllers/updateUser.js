@@ -17,15 +17,15 @@ const updateUser = async (req, res) => {
       const user = await UserModel.findOne(filter);
 
       Object.assign(user, updateData);
-      const updatedUser = await user.save();
+      const {
+         _doc: { password, loggedIn, ...updatedUser },
+      } = await user.save();
 
-      if (updatedUser) {
+      if (updatedUser._id) {
          return res.send({ status: 'success', user: updatedUser });
       }
    } catch (error) {
-      return res
-         .status(500)
-         .send({ status: 'error', errorMsg: error.message });
+      return res.status(500).send({ status: 'error' });
    }
 };
 
