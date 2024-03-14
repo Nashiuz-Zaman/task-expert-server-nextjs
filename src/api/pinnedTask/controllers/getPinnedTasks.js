@@ -16,9 +16,7 @@ const getPinnedTasks = async (req, res) => {
 
       return res.send({ status: 'success', pinnedTasks });
    } catch (error) {
-      return res
-         .status(500)
-         .send({ status: 'error', errorMsg: error.message });
+      return res.status(500).send({ status: 'error' });
    }
 };
 

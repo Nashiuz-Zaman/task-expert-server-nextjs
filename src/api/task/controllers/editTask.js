@@ -24,9 +24,7 @@ const editTask = async (req, res) => {
 
       return res.send({ status: 'success' });
    } catch (error) {
-      return res
-         .status(500)
-         .send({ status: 'error', errorMsg: error.message });
+      return res.status(500).send({ status: 'error' });
    }
 };
 

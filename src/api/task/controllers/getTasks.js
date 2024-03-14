@@ -12,13 +12,11 @@ const getTasks = async (req, res) => {
 
       const filter = { email: email };
       const sortOption = { lastUpdated: 1 };
-      
+
       const tasks = await TaskModel.find(filter).sort(sortOption);
       return res.send({ status: 'success', tasks });
    } catch (error) {
-      return res
-         .status(500)
-         .send({ status: 'error', errorMsg: error.message });
+      return res.status(500).send({ status: 'error' });
    }
 };
 
