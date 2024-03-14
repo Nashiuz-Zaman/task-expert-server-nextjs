@@ -15,7 +15,7 @@ const userRouter = express.Router();
 
 // routes
 userRouter.post('/users', createUser);
-userRouter.post('/users/checkExistence', checkUser);
+userRouter.post('/users/check-user', checkUser);
 userRouter.patch('/users/:email', verifyToken, updateUser);
 userRouter.delete('/users/:email', verifyToken, deleteUser);
 

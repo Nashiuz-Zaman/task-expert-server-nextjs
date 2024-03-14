@@ -7,6 +7,7 @@ dotenv.config();
 
 const verifyToken = (req, res, next) => {
    let token = req.headers.authorization;
+  
    
    if (!token) {
       return res
@@ -14,7 +15,7 @@ const verifyToken = (req, res, next) => {
          .send({ status: 'error', message: 'unauthorized access' });
    }
 
-   token = token.split(' ')[1]
+   token = token.split(' ')[1];
 
    jwt.verify(token, process.env.token_secret, (err, decoded) => {
       if (err) {

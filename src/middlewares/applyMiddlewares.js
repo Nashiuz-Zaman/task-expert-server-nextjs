@@ -5,7 +5,7 @@ import cors from 'cors';
 const applyMiddlewares = app => {
    app.use(
       cors({
-         origin: 'http://localhost:3000',
+         origin: true,
       })
    );
    app.use(express.json());
