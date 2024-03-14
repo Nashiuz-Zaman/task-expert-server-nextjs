@@ -3,18 +3,24 @@ import UserModel from '../../../models/User/User.js';
 import generateToken from '../../../utils/generateToken.js';
 
 const googleLogin = async (req, res) => {
-   const googleUser = req.body;
+   try {
+      const googleUser = req.body;
 
-   // check if google user exists
-   const user = await UserModel.findOne({ email: googleUser.email });
-   user.loggedIn = true;
-   const { password, ...updatedUser } = await user.save();
+      // check if google user exists
+      const user = await UserModel.findOne({ email: googleUser.email });
 
-   const token = generateToken({ email: googleUser.email });
+      const token = generateToken({ email: googleUser.email });
 
-   if (updatedUser) {
-      return res.send({ status: 'success', user: updatedUser, token });
-   } else {
+      if (user?._id) {
+         user.loggedIn = true;
+
+         const {
+            _doc: { password, loggedIn, ...updatedUser },
+         } = await user.save();
+
+         return res.send({ status: 'success', user: updatedUser, token });
+      }
+
       // if no user is found in the database create the new user object in mongodb as user
       const newGoogleUser = {
          name: googleUser.name,
@@ -26,16 +32,19 @@ const googleLogin = async (req, res) => {
       };
 
       // create new user document in collection
-      const newCreatedUser = await UserModel.create(newGoogleUser);
-      if (newCreatedUser._id) {
-         const { password, ...user } = newCreatedUser;
+      const {
+         _doc: { password, loggedIn, ...newUser },
+      } = await UserModel.create(newGoogleUser);
 
+      if (newUser?._id) {
          return res.send({
             status: 'success',
             token,
-            user,
+            user: newUser,
          });
       }
+   } catch (error) {
+      return res.status(500).send({ status: 'error', errorMsg: error.message });
    }
 };
 
