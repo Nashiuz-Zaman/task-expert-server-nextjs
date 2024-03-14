@@ -2,14 +2,19 @@
 import UserModel from '../../../models/User/User.js';
 
 const logout = async (req, res) => {
-   const { email } = req.body;
+   try {
+      const { email } = req.body;
 
-   const user = await UserModel.findOne({ email });
-   user.loggedIn = false;
-   const updatedUser = await user.save();
+      const user = await UserModel.findOne({ email });
 
-   if (updatedUser._id) {
-      return res.send({ status: 'success' });
+      user.loggedIn = false;
+      const updatedUser = await user.save();
+
+      if (updatedUser) {
+         return res.send({ status: 'success' });
+      }
+   } catch (error) {
+      return res.status(500).send({ status: 'error' });
    }
 };
 

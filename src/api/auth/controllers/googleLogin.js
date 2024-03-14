@@ -44,7 +44,7 @@ const googleLogin = async (req, res) => {
          });
       }
    } catch (error) {
-      return res.status(500).send({ status: 'error', errorMsg: error.message });
+      return res.status(500).send({ status: 'error'});
    }
 };
 
