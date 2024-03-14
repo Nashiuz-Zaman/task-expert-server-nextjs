@@ -15,7 +15,6 @@ const userSchema = new Schema({
    },
    imageSource: {
       type: String,
-      required: true,
    },
    role: {
       type: String,
@@ -24,7 +23,7 @@ const userSchema = new Schema({
    loggedIn: {
       type: Boolean,
       required: true,
-   }
+   },
 });
 
 const UserModel = model('User', userSchema);
