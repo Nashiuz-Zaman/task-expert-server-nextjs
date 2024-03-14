@@ -26,8 +26,7 @@ const deleteTask = async (req, res) => {
 
       return res.send({ status: 'success', updatedTasks: newTasks });
    } catch (error) {
-      console.error('Error updating task:', error);
-      return res
+         return res
          .status(500)
          .send({ status: 'error', error: 'Internal Server Error' });
    }

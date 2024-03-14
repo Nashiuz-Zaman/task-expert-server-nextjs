@@ -24,10 +24,9 @@ const createTask = async (req, res) => {
          return res.send({ status: 'success', tasks });
       }
    } catch (error) {
-      console.error('Error fetching tasks:', error);
-      return res
+        return res
          .status(500)
-         .send({ status: 'error', customErrMessage: error.message });
+         .send({ status: 'error', errorMsg: error.message });
    }
 };
 

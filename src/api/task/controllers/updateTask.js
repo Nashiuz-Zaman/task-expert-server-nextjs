@@ -31,10 +31,9 @@ const updateTask = async (req, res) => {
 
       return res.send({ status: 'success' });
    } catch (error) {
-      console.error('Error updating task:', error);
-      return res
+        return res
          .status(500)
-         .send({ status: 'error', customErrMessage: error.message });
+         .send({ status: 'error', errorMsg: error.message });
    }
 };
 

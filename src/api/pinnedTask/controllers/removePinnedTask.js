@@ -22,7 +22,7 @@ const removePinnedTask = async (req, res) => {
    } catch (error) {
       return res
          .status(500)
-         .send({ status: 'error', customErrMessage: error.message });
+         .send({ status: 'error', errorMsg: error.message });
    }
 };
 
