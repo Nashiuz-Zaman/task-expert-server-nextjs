@@ -26,7 +26,7 @@ const deleteUser = async (req, res) => {
          ]);
 
       if (userDeleteRes.deletedCount) {
-         res.send({ status: 'success' });
+        return res.send({ status: 'success' });
       }
    } catch (error) {
       return res.status(500).send({ status: 'error' });
